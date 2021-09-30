@@ -945,10 +945,6 @@ export class BaseRoom extends SkeldjsStateManager<RoomEvents> {
 
             this.spawnPrefab(ship_prefabs[this.settings?.map] || 0, -2);
             await this.shipStatus?.selectImpostors();
-
-            for (const [, player] of this.players) {
-                this.gameData?.setTasks(player, [1, 2, 3]);
-            }
         }
     }
 
