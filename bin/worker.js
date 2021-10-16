@@ -20,6 +20,15 @@ async function resolveConfig() {
     }
 }
 
+function checkForPortArgument() {
+    if(process.argv[2] !== '--port') return;
+    const portString = process.argv[3];
+    if(!portString) return;
+    const port = Number.parseInt(portString);
+    if(!Number.isInteger(port) || Number.isNaN(port)) return;
+    return port;
+}
+
 function makeHttpRequest(url) {
     return new Promise((resolve, reject) => {
         const req = https.get(url, res => {
@@ -158,7 +167,7 @@ async function getInternalIp() {
         worker.logger.warn("Cannot open config file; using default config");
     }
 
-    const port = worker.config.socket.port;
+    const port = checkForPortArgument() || worker.config.socket.port;
     await worker.listen(port);
 
     worker.logger.info("Listening on:");
